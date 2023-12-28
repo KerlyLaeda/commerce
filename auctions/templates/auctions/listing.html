@@ -5,35 +5,74 @@
 {% endblock title %}
 
 {% block body %}
-    <div>
-        <h2>Listing: {{ listing.title }}</h2>
-        <img src="{{ listing.photo }}" alt="{{ listing.title }}">
-        <p>{{ listing.description }}</p>
-        <h4>{{ listing.price }}</h4>
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4">
+                {% if listing.photo %}
+                    <img src="{{ listing.photo }}" class="img-fluid rounded-start" alt="{{ listing.title }}">
+                {% endif %}
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">Listing: {{ listing.title }}</h5>
+                    <p class="card-text">{{ listing.description }}</p>
+                    <h6 class="card-text">Current price: ${{ listing.price }}</h6>
+                    
+                    <h6><small class="text-body-secondary">Details</small></h6>
+                        <ul>
+                            <li><small class="text-body-secondary">Listed by <a href="">{{ listing.owner }}</a></small></li>
+                            <li><small class="text-body-secondary">Created {{ listing.date_posted }}</small></li>
+                            
+                            <li><small class="text-body-secondary">Category:
+                                {% if category %}
+                                    <a href="{% url 'items_in_category' category %}">{{ listing.category }}</a>
+                                {% else %}
+                                    No category listed.
+                                {% endif %}
+                            </small></li>
+                        </ul>
+                </div>
+                <form action="{% url 'toggle_watchlist' listing.pk %}" method="post">
+                    {% csrf_token %}
+                    {% if listing.in_watchlist %}
+                        <button type="submit" class="btn mb-3 ml-3">Remove from Watchlist</button>
+                    {% else %}
+                        <button type="submit" class="btn mb-3 ml-3">Add to Watchlist</button>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
     </div>
-    
+
+    <!-- Bids -->
     <form action="" method="post">
         <!-- cs50 example: N bids so far. Your bid is the current bid -->
         <div class="mb-3">
             <input type="number" min="0">
         </div>
-        <button type="submit" class="btn btn-primary">Place Bid</button>
+        <button type="submit" class="btn">Place Bid</button>
     </form>
 
-    <!-- Details -->
-    <div>
-        <h3>Details</h3>
-        <ul>
-            <li>Posted by <a href="">{{ listing.owner }}</a></li>
-            <li>Created {{ listing.date_posted }}</li>
-            
-            <li>Category:
-                {% if listing.category %}
-                    <a href="">{{ listing.category }}</a>
-                {% else %}
-                    No category listed.
-                {% endif %}
-            </li>
-        </ul>
-    </div>
+    <!-- Comment section -->
+    <h4>Comments</h4>
+
+    <!-- Post new comment -->
+    {% if user.is_authenticated %}
+        <div class="form-group">
+            <form action="{% url 'add_comment' listing.pk %}" method="post">
+                {% csrf_token %}
+                <input type="text" placeholder="Add a comment" name="new_comment">
+                <button type="submit" class="btn">Post</button>
+                {{ comment_form }}
+                <button type="submit" class="btn">Post</button>
+            </form>
+        </div>
+    {% endif %}
+
+    <!-- Display all comments -->
+    {% for comment in listing.comments.all %}
+        <p>{{ comment.author }}: {{ comment.text }}</p>
+    {% empty %}
+        Be the first to comment!
+    {% endfor %}
 {% endblock %}

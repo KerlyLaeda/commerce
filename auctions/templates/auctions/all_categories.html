@@ -1,0 +1,18 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}
+    Listing Categories
+{% endblock title %}
+
+{% block body %}
+    <h2>Browse by Category</h2>
+    {% for category in categories %}
+        <a href="{% url 'items_in_category' category %}">{{ category }}</a><br>
+        <div class="card mx-2 my-2" style="width: 16rem;">
+            <img src="" class="card-img-top" style="height: 15rem; object-fit: contain;">
+            <div class="card-body">
+                <a href="" class="btn">Explore</a>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock body %}

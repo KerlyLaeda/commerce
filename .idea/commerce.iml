@@ -6,5 +6,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="django_blog" />
     <orderEntry type="module" module-name="tehtava" />
+    <orderEntry type="module" module-name="Network" />
   </component>
 </module>

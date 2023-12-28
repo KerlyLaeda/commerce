@@ -1,3 +1,87 @@
 body {
-    padding: 10px;
+    /*padding: 10px;*/
+    padding: 0;
+    margin: 0;
+}
+
+.btn {
+    background: #fa8128;
+    border-radius: 30px;
+}
+
+.btn:hover {
+    background: #dd571c;
+}
+
+/* Navbar */
+.navbar {
+    background: #000080;
+    color: #fff;
+}
+
+.navbar-brand, .navbar-brand:hover {
+    color: #fa8128;
+}
+
+.navbar-toggler-icon, .nav-link {
+    color: #fff;
+}
+
+.nav-link::after {
+    content: '';
+    width: 0%;
+    height: 2px;
+    background: #fa8128;
+    display: block;
+    margin: auto;
+    transition: 0.5s;
+}
+
+.nav-link:hover {
+    color: #fff;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+
+/* Main content */
+h2 {
+    text-align: center;
+    margin: 20px;
+}
+
+.row {
+    width: 90%;
+}
+
+/* Listing cards */
+.card-img-top {
+    height: 15rem;
+    object-fit: cover;
+}
+
+.listing-card-heart-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 3;
+    padding: 4px 4px 0 0;
+}
+
+.heart-btn {
+    border: none;
+    color: #fa8128;
+    background: transparent;
+}
+
+.heart-btn:focus {
+    outline: none;
+}
+
+
+/* Add a new listing */
+form {
+    margin: 20px;
 }

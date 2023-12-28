@@ -5,11 +5,12 @@
 {% endblock title %}
 
 {% block body %}
+    <h2>Create New Listing</h2>
     <div class="form-group">
         <form action="{% url 'new_listing' %}" method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Add Listing</button>
+            <button type="submit" class="btn">Add Listing</button>
         </form>
     </div>
 {% endblock body %}

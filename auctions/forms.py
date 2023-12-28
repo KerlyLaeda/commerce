@@ -6,16 +6,26 @@ from .models import *
 class NewListingForm(forms.ModelForm):
     class Meta:
         model = AuctionListing
-        fields = ["title", "description", "photo", "category"]
+        fields = ["title", "description", "price", "photo", "category"]
 
         widgets = {
-            "title": forms.TextInput(attrs={"class": "form-control"}),
-            "description": forms.Textarea(attrs={"class": "form-control"}),
-            "photo": forms.FileInput(attrs={"class": "form-control"}),  # weird bug # adding separate img field doesnt help, it looks the same anyways
+            "title": forms.TextInput(attrs={"class": "form-control", "placeholder": "Add a title"}),
+            "description": forms.Textarea(attrs={"class": "form-control",
+                                                 "placeholder": "Add a description", "rows": "6"}),
+            "price": forms.NumberInput(attrs={"class": "form-control",
+                                              "placeholder": "Set a starting bid",
+                                              "step": "0.5",
+                                              "min": "0"}),
+            "photo": forms.URLInput(attrs={"class": "form-control", "placeholder": "Image URL"}),
             "category": forms.Select(attrs={"class": "form-control"})
         }
 
-        # Default for foreign key (DecimalField) is <select>
-        # widgets = {
-        #     'price': forms.NumberInput(attrs={'step': '0.01'}),
-        # }
+
+class NewCommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ["text"]
+        widgets = {
+            "text": forms.Textarea(attrs={"class": "form-control",
+                                          "placeholder": "Add a comment", "rows": "6"})
+        }
